@@ -1,0 +1,109 @@
+{
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "3d6c414c-1339-4ccf-8412-c1e4e37fa398",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -784,
+        0
+      ],
+      "id": "378b06cc-9233-438e-930a-4da1caf39018",
+      "name": "Webhook",
+      "webhookId": "3d6c414c-1339-4ccf-8412-c1e4e37fa398"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "aqui vou colocar o conversasion que é a mensagem que vai ser recebida",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        -576,
+        0
+      ],
+      "id": "f8e3e267-3117-40aa-85d6-4cde199b91c7",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-2.5-flash",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1.1,
+      "position": [
+        -576,
+        160
+      ],
+      "id": "dc255fcc-0ca6-47b4-9336-7691bbfaf4de",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "A53j21eiPYynuKm2",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "messages-api",
+        "options_message": {}
+      },
+      "type": "n8n-nodes-evolution-api.evolutionApi",
+      "typeVersion": 1,
+      "position": [
+        -288,
+        0
+      ],
+      "id": "dd2d8212-3213-489a-b5a8-046b807f6965",
+      "name": "Enviar texto"
+    }
+  ],
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Enviar texto",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {},
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "5ccd9cd409ebda6d635c10e94a03dd05dca18c3189a2e8d52bf184eea42efe08"
+  }
+}
